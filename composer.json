@@ -1,0 +1,27 @@
+{
+  "name": "jonwurtzler/challenge_037_buzzwords",
+  "description": "Write a PHP program that given some text will count the number of buzzwords that appear in it, based on this list of buzzwords.",
+  "authors": [
+    {
+      "name": "Jon Wurtzler",
+      "email": "jwurtzle@nerdery.com"
+    }
+  ],
+  "license": "MIT",
+  "require-dev": {
+    "phpunit/phpunit" : "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Buzzwords\\": "src/Buzzwords/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/BuzzwordsTest.php"
+    ]
+  },
+  "require": {
+    "guzzlehttp/guzzle": "~6.0"
+  }
+}
