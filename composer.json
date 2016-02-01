@@ -21,7 +21,5 @@
       "tests/BuzzwordsTest.php"
     ]
   },
-  "require": {
-    "guzzlehttp/guzzle": "~6.0"
-  }
+  "require": { }
 }
