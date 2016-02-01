@@ -2,6 +2,8 @@
 
 namespace Buzzwords;
 
+use Exception;
+
 class BuzzwordReader
 {
 
@@ -62,11 +64,37 @@ class BuzzwordReader
   }
 
   /**
-   * @param $url
+   * Read the contents of the file and read it as normal text.
+   *
+   * @param string $filename
+   *
+   * @return array
+   * @throws Exception
+   */
+  public function readFileContent($filename)
+  {
+    $content = @file_get_contents($filename);
+
+    if (false === $content) {
+      throw new Exception("Invalid File");
+    }
+
+    return $this->readTextContent($content);
+  }
+
+  /**
+   * Read the content from a passed url.
+   *
+   * @param string $url
+   *
+   * @return array
    */
   public function readUrlContent($url)
   {
+    $buzzwordUrlLoader = new BuzzwordUrlLoader();
+    $content = $buzzwordUrlLoader->loadUrl($url);
 
+    return $this->readTextContent($content);
   }
 
 }

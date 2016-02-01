@@ -18,15 +18,63 @@ use Buzzwords\BuzzwordReader;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+$buzzwords      = [];
 $buzzwordReader = new BuzzwordReader();
 
-$test = "Text to win-win campaigns-free increase best of breed by offering-free an incredible eyeballs. Usually, this isn’t your-free standard buy one get one free campaign-free. It offers something a home more valuable. But, because of this, these win-win messages always see high engagement win-win rates.";
-$buzzwords  = $buzzwordReader->readTextContent($test);
+// parse command options
+$shortOpts = "h";
+$longOpts  = ["file::", "url::"];
+$options = getopt($shortOpts, $longOpts);
+
+// Read from file
+if (isset($options['file'])) {
+  $file = "testfile.txt"; // Default state.
+  if ($options['file']) {
+    $file = $options['file'];
+  }
+
+  $buzzwords = $buzzwordReader->readFileContent($file);
+} elseif(isset($options['url'])) {
+  $url = "https://nerdery.com"; // Default state.
+  if ($options['url']) {
+    $url = $options['url'];
+  }
+
+  $buzzwords = $buzzwordReader->readUrlContent($url);
+} else {
+  $buzzwordText = (string) isset($argv[1]) ? $argv[1] : false;
+
+  if ($buzzwordText) {
+    $buzzwords = $buzzwordReader->readTextContent($buzzwordText);
+  }
+}
+
+$help = (boolean) isset($options['h']) ? true : false;
+if ($help || (count($buzzwords) < 1)) {
+echo <<<HELP
+  Usage:
+    php calculate-wrapping-paper.php <text>
+    php calculate-wrapping-paper.php [--file=<file>]
+    php calculate-wrapping-paper.php [--url=<url>]
+
+    -h             Help
+    --file=<file>  Parse file as having a box dimension on each line
+    --url=<url>    Parse file as having a box dimension on each line
+
+
+HELP;
+}
+
 $totalWords = $buzzwordReader->getTotalWordCount();
 
-echo("Total Words: $totalWords\n");
+if ($totalWords > 0) {
+  echo("Total Words: $totalWords\n");
 
-foreach ($buzzwords as $word => $count) {
-  $percent = (round(($count / $totalWords), 2) * 100) . "%";
-  echo("$word: ($count - $percent)\n");
+  foreach ($buzzwords as $word => $count) {
+    // Make sure to adjust the percentage to include how many words are in each phrase.
+    $adjCount = $count * str_word_count($word);
+    $percent  = (round(($adjCount / $totalWords), 2) * 100) . "%";
+
+    echo("$word: ($count - $percent)\n");
+  }
 }
