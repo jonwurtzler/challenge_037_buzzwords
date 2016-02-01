@@ -53,9 +53,9 @@ $help = (boolean) isset($options['h']) ? true : false;
 if ($help || (count($buzzwords) < 1)) {
 echo <<<HELP
   Usage:
-    php calculate-wrapping-paper.php <text>
-    php calculate-wrapping-paper.php [--file=<file>]
-    php calculate-wrapping-paper.php [--url=<url>]
+    $ php buzzwords.php <text>
+    $ php buzzwords.php --file[=<file>]
+    $ php buzzwords.php --url[=<url>]
 
     -h             Help
     --file=<file>  Parse file as having a box dimension on each line

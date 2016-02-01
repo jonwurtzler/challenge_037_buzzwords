@@ -12,4 +12,11 @@ Install the vendor dependencies with Composer:
 
 ## Usage
 
-    $ php buzzwords.php
+    $ php buzzwords.php <text>
+    $ php buzzwords.php --file[=<file>]
+    $ php buzzwords.php --url[=<url>]
+
+    Options:
+    -h              Help
+    --file[=<file>] Parse file as having a box dimension on each line
+    --url[=<url>]   Parse file as having a box dimension on each line
